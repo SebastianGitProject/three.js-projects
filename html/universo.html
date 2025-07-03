@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="../css/stileUniverso.css">
+  <script type="text/javascript" src="jquery-3.6.3.js"></script>
+</head>
+<body>
+    <div class="loader-wrapper">
+      <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    <button id="button">Velocità +</button>
+    <button id="button2">Velocità -</button>
+    <button id="button3">Tempo</button>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.115.0/build/three.min.js"></script>
+    <script type="module" src="OrbitControls.js"></script>
+    <!--<script src="../js/universo.js"></script>-->
+    <script type="module">
+
+    let buttonePremuto = false;
+    const button1 = document.getElementById('button');
+    button1.addEventListener('click', () => {
+      
+      velocitySunY += 0.004;
+      velocityMercuryY += 0.04;
+      velocityVenusY += 0.015;
+      velocityEarthY += 0.01;
+      velocityMarsY += 0.008;
+      velocityJupiterY += 0.002;
+      velocitySaturnY += 0.0009;
+      velocityUranusY += 0.0004;
+      velocityNeptuneY += 0.0001;
+      velocityPlutoY += 0.00007;
+    });
+
+    const button2 = document.getElementById('button2');
+    button2.addEventListener('click', () => {
+      
+      velocitySunY -= 0.004;
+      velocityMercuryY -= 0.04;
+      velocityVenusY -= 0.015;
+      velocityEarthY -= 0.01;
+      velocityMarsY -= 0.008;
+      velocityJupiterY -= 0.002;
+      velocitySaturnY -= 0.0009;
+      velocityUranusY -= 0.0004;
+      velocityNeptuneY -= 0.0001;
+      velocityPlutoY -= 0.00007;
+    });
+
+    const button3 = document.getElementById('button3');
+    button3.addEventListener('click', () => {
+      buttonePremuto = !buttonePremuto;
+      updateObjectSpeed();
+    });
+
+    function updateObjectSpeed() {
+      if (buttonePremuto) {
+        velocitySunY = 0.000;
+        velocityMercuryY = 0.00;
+        velocityVenusY = 0.000;
+        velocityEarthY = 0.00;
+        velocityMarsY = 0.000;
+        velocityJupiterY = 0.000;
+        velocitySaturnY = 0.0000;
+        velocityUranusY = 0.0000;
+        velocityNeptuneY = 0.0000;
+        velocityPlutoY = 0.00000;
+      } else {
+        velocitySunY += 0.004;
+        velocityMercuryY += 0.04;
+        velocityVenusY += 0.015;
+        velocityEarthY += 0.01;
+        velocityMarsY += 0.008;
+        velocityJupiterY += 0.002;
+        velocitySaturnY += 0.0009;
+        velocityUranusY += 0.0004;
+        velocityNeptuneY += 0.0001;
+        velocityPlutoY += 0.00007;
+      }
+    }
+
+    let velocitySunY = 0.004;
+    let velocityMercuryY = 0.04;
+    let velocityVenusY = 0.015;
+    let velocityEarthY = 0.01;
+    let velocityMarsY = 0.008;
+    let velocityJupiterY = 0.002;
+    let velocitySaturnY = 0.0009;
+    let velocityUranusY = 0.0004;
+    let velocityNeptuneY = 0.0001;
+    let velocityPlutoY = 0.00007;
+
+      // Crea il renderer
+    var renderer = new THREE.WebGLRenderer({ antialias: false });
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+    
+    
+
+    //renderer.setClearColor(0x66FFFF);
+    // Crea la scena
+    var scene = new THREE.Scene();
+    
+    const texture2 = new THREE.TextureLoader();
+
+    scene.background = texture2.load( './model/stars.jpg' );
+    // Crea la camera
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    camera.position.set(0, 140, 120);
+
+    //const controls = new OrbitControls(camera, renderer.domElement);
+    
+
+    camera.lookAt(0, 0, 0);
+    
+    const texture = new THREE.TextureLoader().load( './model/sun.jpg' );
+    const mercuryTexture = new THREE.TextureLoader().load( './model/mercury.jpg' );
+    const venusTexture = new THREE.TextureLoader().load( './model/venus.jpg' );
+    const earthTexture = new THREE.TextureLoader().load( './model/earth.jpg' );
+    const marsTexture = new THREE.TextureLoader().load( './model/mars.jpg' );
+    const jupiterTexture = new THREE.TextureLoader().load( './model/jupiter.jpg' );
+    const saturnTexture = new THREE.TextureLoader().load( './model/saturn.jpg' );
+    const saturnRingTexture = new THREE.TextureLoader().load( './model/saturn ring.png' );
+    const uranusTexture = new THREE.TextureLoader().load( './model/uranus.jpg' );
+    const uranusRingTexture = new THREE.TextureLoader().load( './model/uranus ring.png' );
+    const neptuneTexture = new THREE.TextureLoader().load( './model/neptune.jpg' );
+    const plutoTexture = new THREE.TextureLoader().load( './model/pluto.jpg' );
+    const asteroidTexture = new THREE.TextureLoader().load( './model/3215.jpg' );
+
+    // Crea il centro
+    var geometry = new THREE.SphereGeometry( 16, 30, 30 );
+    var material = new THREE.MeshBasicMaterial( { map: texture } );
+    var cube = new THREE.Mesh( geometry, material );
+    
+    // Creazione del torus
+    const torusGeometry = new THREE.TorusGeometry(28, 0.15, 16, 100);
+    const torusMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh = new THREE.Mesh(torusGeometry, torusMaterial);
+    const torusGeometry2 = new THREE.TorusGeometry(44, 0.15, 16, 100);
+    const torusMaterial2 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh2 = new THREE.Mesh(torusGeometry2, torusMaterial2);
+    const torusGeometry3 = new THREE.TorusGeometry(62, 0.15, 16, 100);
+    const torusMaterial3 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh3 = new THREE.Mesh(torusGeometry3, torusMaterial3);
+    const torusGeometry4 = new THREE.TorusGeometry(78, 0.15, 16, 100);
+    const torusMaterial4 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh4 = new THREE.Mesh(torusGeometry4, torusMaterial4);
+    const torusGeometry5 = new THREE.TorusGeometry(120, 0.15, 16, 100);
+    const torusMaterial5 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh5 = new THREE.Mesh(torusGeometry5, torusMaterial5);
+    const torusGeometry6 = new THREE.TorusGeometry(158, 0.15, 16, 100);
+    const torusMaterial6 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh6 = new THREE.Mesh(torusGeometry6, torusMaterial6);
+    const torusGeometry7 = new THREE.TorusGeometry(196, 0.15, 16, 100);
+    const torusMaterial7 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh7 = new THREE.Mesh(torusGeometry7, torusMaterial7);
+    const torusGeometry8 = new THREE.TorusGeometry(220, 0.15, 16, 100);
+    const torusMaterial8 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh8 = new THREE.Mesh(torusGeometry8, torusMaterial8);
+    const torusGeometry9 = new THREE.TorusGeometry(236, 0.15, 16, 100);
+    const torusMaterial9 = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const torusMesh9 = new THREE.Mesh(torusGeometry9, torusMaterial9);
+
+    // Posizionamento del torus attorno all'oggetto centrale
+    torusMesh.position.set(0, 0, 0); // Posizione iniziale
+    torusMesh.rotation.set(Math.PI / 2, 0, 0); // Rotazione iniziale
+    scene.add(torusMesh);
+    torusMesh2.position.set(0, 0, 0); 
+    torusMesh2.rotation.set(Math.PI / 2, 0, 0); 
+    scene.add(torusMesh2);
+    torusMesh3.position.set(0, 0, 0); 
+    torusMesh3.rotation.set(Math.PI / 2, 0, 0); 
+    scene.add(torusMesh3); 
+    torusMesh4.position.set(0, 0, 0); 
+    torusMesh4.rotation.set(Math.PI / 2, 0, 0); 
+    scene.add(torusMesh4); 
+    torusMesh5.position.set(0, 0, 0); 
+    torusMesh5.rotation.set(Math.PI / 2, 0, 0); 
+    scene.add(torusMesh5); 
+    torusMesh6.position.set(0, 0, 0); 
+    torusMesh6.rotation.set(Math.PI / 2, 0, 0); 
+    scene.add(torusMesh6); 
+    torusMesh7.position.set(0, 0, 0); 
+    torusMesh7.rotation.set(Math.PI / 2, 0, 0); 
+    scene.add(torusMesh7); 
+    torusMesh8.position.set(0, 0, 0); 
+    torusMesh8.rotation.set(Math.PI / 2, 0, 0); 
+    scene.add(torusMesh8); 
+    torusMesh9.position.set(0, 0, 0); 
+    torusMesh9.rotation.set(Math.PI / 2, 0, 0); 
+    scene.add(torusMesh9);  
+
+    const asteroidGeometry = new THREE.Geometry();
+      for (let i = 0; i < 1500; i++) {
+        const radius = THREE.MathUtils.randFloat(90, 104);
+        const angle = THREE.MathUtils.randFloat(0, Math.PI * 2);
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+        const z = THREE.MathUtils.randFloat(50, 50);
+        asteroidGeometry.vertices.push(new THREE.Vector3(x, y, z));
+      }
+
+      // Crea il materiale per gli asteroidi
+      const asteroidMaterial = new THREE.PointsMaterial({
+        size: 2,
+        sizeAttenuation: true,
+        map: asteroidTexture,
+        transparent: true,
+        opacity: 1,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      // Crea gli asteroidi come oggetto THREE.Points
+      const asteroids = new THREE.Points(asteroidGeometry, asteroidMaterial);
+      asteroids.rotation.x = -Math.PI / 2;
+      asteroids.position.y = -50;
+      //asteroids.position.set(0, 0, 0);
+
+      // Aggiungi gli asteroidi alla scena
+      scene.add(asteroids);
+
+
+      const asteroidGeometry2 = new THREE.Geometry();
+      for (let i = 0; i < 2500; i++) {
+        const radius = THREE.MathUtils.randFloat(244, 258);
+        const angle = THREE.MathUtils.randFloat(0, Math.PI * 2);
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+        const z = THREE.MathUtils.randFloat(50, 50);
+        asteroidGeometry2.vertices.push(new THREE.Vector3(x, y, z));
+      }
+
+      // Crea il materiale per gli asteroidi
+      const asteroidMaterial2 = new THREE.PointsMaterial({
+        size: 2,
+        sizeAttenuation: true,
+        map: asteroidTexture,
+        transparent: true,
+        opacity: 1,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      // Crea gli asteroidi come oggetto THREE.Points
+      const asteroids2 = new THREE.Points(asteroidGeometry2, asteroidMaterial2);
+      asteroids2.rotation.x = -Math.PI / 2;
+      asteroids2.position.y = -50;
+      //asteroids.position.set(0, 0, 0);
+
+      // Aggiungi gli asteroidi alla scena
+      scene.add(asteroids2);
+
+
+
+    function createPlanete(size, texture, position, ring) {
+        const geo = new THREE.SphereGeometry(size, 30, 30);
+        const mat = new THREE.MeshStandardMaterial({ map: texture });
+        const mesh2 = new THREE.Mesh(geo, mat);
+        const obj5 = new THREE.Object3D();
+        obj5.add(mesh2);
+        if(ring) {
+            const ringGeo = new THREE.RingGeometry(
+                ring.innerRadius,
+                ring.outerRadius,
+                32);
+            const ringMat = new THREE.MeshBasicMaterial({
+                map: ring.texture,
+                side: THREE.DoubleSide
+            });
+            const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+            obj5.add(ringMesh);
+            ringMesh.position.x = position;
+            ringMesh.rotation.x = -0.5 * Math.PI;
+        }
+        scene.add(obj5);
+        mesh2.position.x = position;
+        return {mesh2, obj5}
+    }
+
+    const mercury = createPlanete(3.2, mercuryTexture, 28);
+    const venus = createPlanete(5.8, venusTexture, 44);
+    const earth = createPlanete(6, earthTexture, 62);
+    const mars = createPlanete(4, marsTexture, 78);
+    const jupiter = createPlanete(12, jupiterTexture, 120);
+    const saturn = createPlanete(10, saturnTexture, 158, {
+        innerRadius: 10,
+        outerRadius: 20,
+        texture: saturnRingTexture
+    });
+    const uranus = createPlanete(7, uranusTexture, 196, {
+        innerRadius: 7,
+        outerRadius: 12,
+        texture: uranusRingTexture
+    });
+    const neptune = createPlanete(7, neptuneTexture, 220);
+    const pluto = createPlanete(2.8, plutoTexture, 236);
+
+    // Aggiungi il cubo alla scena
+    scene.add( cube );
+
+    let raycaster = new THREE.Raycaster();
+    let mouse = new THREE.Vector2();
+    renderer.domElement.addEventListener("click", onClick, false);
+    //renderer.domElement.addEventListener("wheel", onMouseWheel);
+
+    var light = new THREE.HemisphereLight(0xffffff, 0x000000, 1);
+    scene.add(light);
+
+    const defaultPosition = new THREE.Vector3();
+    defaultPosition.copy(camera.position);
+
+    // Aggiorna la posizione predefinita quando la scena viene modificata
+    window.addEventListener('resize', () => {
+      defaultPosition.copy(camera.position);
+
+    });
+
+    // Aggiungi un listener per lo zoom
+    window.addEventListener('wheel', (event) => {
+      // Calcola la nuova posizione della telecamera
+      const newPosition = new THREE.Vector3();
+      newPosition.copy(camera.position);
+      newPosition.z -= event.deltaY * 0.1;
+      newPosition.y -= event.deltaY * 0.1;
+
+      // Controlla se la telecamera si è avvicinata troppo all'oggetto centrale
+      const distance = newPosition.distanceTo(scene.position);
+      if (distance < 44 || distance > 450) { // esempio: limite massimo di zoom a 10 unità di distanza dall'oggetto centrale
+        // Ripristina la posizione predefinita
+        camera.position.copy(defaultPosition);
+        controls.target.copy(scene.position);
+        controls.update();
+      } else {
+        // Sposta la telecamera e aggiorna i controlli
+        camera.position.copy(newPosition);
+        //controls.update();
+      }
+    });
+    function onClick(event) {
+        event.preventDefault();
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+
+        const intersects = raycaster.intersectObject(cube);
+
+        if (intersects.length > 0) {
+          // il cubo è stato cliccato
+          window.open('./paginePianeti/sole.html');
+        }
+      }
+
+    // Funzione di render
+    var render = function () {
+      requestAnimationFrame( render );
+      /*rotatingCube.position.x = Math.sin(Date.now() * 0.001) * 4;  //il 4 è la distanza
+      rotatingCube.position.z = Math.cos(Date.now() * 0.001) * 4;
+      rotatingCube.rotation.z += 0.05;*/
+      //cube.rotation.x += 0.01;
+
+      //rotazione sole
+      cube.rotation.y += velocitySunY;
+      //cube.rotation.y += velocityY;
+
+      //rotazione su se stessi
+      mercury.mesh2.rotateY(0.004);
+      venus.mesh2.rotateY(0.002);
+      earth.mesh2.rotateY(0.02);
+      mars.mesh2.rotateY(0.018);
+      jupiter.mesh2.rotateY(0.04);
+      saturn.mesh2.rotateY(0.038);
+      uranus.mesh2.rotateY(0.03);
+      neptune.mesh2.rotateY(0.032);
+      pluto.mesh2.rotateY(0.008);
+
+      //rotazione dal sole
+      mercury.obj5.rotateY(velocityMercuryY);
+      venus.obj5.rotateY(velocityVenusY);
+      earth.obj5.rotateY(velocityEarthY);
+      mars.obj5.rotateY(velocityMarsY);
+      jupiter.obj5.rotateY(velocityJupiterY);
+      saturn.obj5.rotateY(velocitySaturnY);
+      uranus.obj5.rotateY(velocityUranusY);
+      neptune.obj5.rotateY(velocityNeptuneY);
+      pluto.obj5.rotateY(velocityPlutoY);
+      //controls.update();
+      renderer.render( scene, camera );
+    };
+
+    render();
+    </script>
+    <script src="../js/universo.js"></script>
+</body>
+</html>

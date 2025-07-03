@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="../css/stile.css">
+  <script type="text/javascript" src="jquery-3.6.3.js"></script>
+</head>
+<body onload = "inizio()">
+  <div class="content">
+    <!--<img src="https://picsum.photos/300/300/?random" />-->
+    <h1 id="titolos">Login</h1>
+      <form method="post">
+        <div class="txt_field">
+          <input type="text" required id="testo1">
+          <span></span>
+          <label>Username</label>
+        </div>
+        <div class="txt_field">
+          <input type="password" required id="testo2">
+          <span></span>
+          <label>Password</label>
+        </div>
+        <!--<div class="pass">Forgot Password?</div>-->
+        <input type="button" value="Login" id="bottone">
+        <div class="signup_link">
+          Non sei un membro? <a href="#">Iscriviti</a>
+        </div>
+        </div>
+      </form>
+  </div>
+
+  <div class="loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+  </div>
+  <!--<script>
+      $(window).click("load",function(){
+        $(".loader-wrapper").fadeOut("slow");
+      });
+  </script>-->
+    <script src="../js/codice.js"></script>
+</body>
+</html>
